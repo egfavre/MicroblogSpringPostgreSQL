@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 public class MicroblogController {
     @Autowired
     UserRepository users;
+    @Autowired
+    MessageRepository messages;
+
     @RequestMapping(path="/", method= RequestMethod.GET)
     public String home(HttpSession session){
         String username = (String) session.getAttribute("username");
@@ -46,6 +49,13 @@ public class MicroblogController {
     @RequestMapping(path="/logout", method = RequestMethod.POST)
     public String logout(HttpSession session){
         session.invalidate();
+        return "redirect:/";
+    }
+
+    @RequestMapping(path="/create-message", method = RequestMethod.POST)
+    public String create(HttpSession session, String message){
+        Message msg = new Message (message);
+        messages.save(msg);
         return "redirect:/";
     }
 }
