@@ -15,5 +15,14 @@
 <form action="/logout" method="post">
     <button type="submit">LOGOUT</button>
 </form>
+
+<ol>{{#msgs}}
+<li>{{text}}
+    <form action="/delete-message" method="post" style="display: inline-block">
+        <input type="hidden" name="id" value="{{id}}"/>
+        <button type="submit">Delete</button>
+    </form>
+</li>
+{{/msgs}}</ol>
 </body>
 </html>

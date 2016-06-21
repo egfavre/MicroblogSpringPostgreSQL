@@ -2,6 +2,7 @@ package com.egfavre;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,12 +19,13 @@ public class MicroblogController {
     MessageRepository messages;
 
     @RequestMapping(path="/", method= RequestMethod.GET)
-    public String home(HttpSession session){
+    public String home(HttpSession session, Model model){
         String username = (String) session.getAttribute("username");
-
         if (username == null){
             return "login";
         }
+        Iterable<Message>msgs = messages.findAll();
+        model.addAttribute("msgs", msgs);
         return "home";
     }
 
@@ -56,6 +58,12 @@ public class MicroblogController {
     public String create(HttpSession session, String message){
         Message msg = new Message (message);
         messages.save(msg);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path="/delete-message", method = RequestMethod.POST)
+    public String delete(HttpSession session, int id){
+        messages.delete(id);
         return "redirect:/";
     }
 }
