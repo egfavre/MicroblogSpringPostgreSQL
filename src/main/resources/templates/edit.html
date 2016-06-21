@@ -7,7 +7,8 @@
 <body>
 {{text}}
 <form action="/update" method="post">
-    <input type="text" name="new-message" placeholder="Enter new message here.">
+    <input type="hidden" name="id" value="{{id}}"/>
+    <input type="text" name="newMessage" placeholder="Enter new message here."/>
     <button type="submit">Update</button>
 </form>
 

@@ -72,6 +72,18 @@ public class MicroblogController {
         Message msg = messages.findById(id);
         model.addAttribute("msg", msg);
         model.addAttribute("text", msg.text);
+        model.addAttribute("id", msg.id);
         return "/edit";
+    }
+
+    @RequestMapping(path="/update", method = RequestMethod.POST)
+    public String update(HttpSession session, String newMessage, int id) throws Exception {
+        if (newMessage.isEmpty()){
+            throw new Exception("you did not enter a new message");
+        }
+        Message msg = messages.findById(id);
+        msg.text = newMessage;
+        messages.save(msg);
+        return "redirect:/";
     }
 }
