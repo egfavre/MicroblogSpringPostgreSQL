@@ -66,4 +66,12 @@ public class MicroblogController {
         messages.delete(id);
         return "redirect:/";
     }
+
+    @RequestMapping(path="/edit", method = RequestMethod.GET)
+    public String edit(HttpSession session, Model model, int id){
+        Message msg = messages.findById(id);
+        model.addAttribute("msg", msg);
+        model.addAttribute("text", msg.text);
+        return "/edit";
+    }
 }
